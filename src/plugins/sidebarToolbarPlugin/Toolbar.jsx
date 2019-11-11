@@ -4,6 +4,7 @@ const initialOffsetTop = 5
 
 const Toolbar = ({ store }) => {
   const [topOffset, updateTopOffset] = React.useState(initialOffsetTop)
+  const [optionsToggled, toggleOptions] = React.useState(false)
 
   const onEditorStateChange = (editorState) => {
     const selection = editorState.getSelection()
@@ -18,6 +19,7 @@ const Toolbar = ({ store }) => {
       const { editor } = store.getItem('getEditorRef')()
       const editorContainerNode = editor.closest('.EditorContainer')
 
+      // calculate nodes coords
       const editorContainerCoords = editorContainerNode.getBoundingClientRect()
       const coords = node.getBoundingClientRect()
       updateTopOffset(coords.top - editorContainerCoords.top - 5)
@@ -33,8 +35,22 @@ const Toolbar = ({ store }) => {
   }, [])
 
   return (
-    <div style={{ top: topOffset }} className="ToolbarIcon">
-      ...
+    <div className="ToolbarContainer" style={{ top: topOffset }}>
+      <div
+        className="ToolbarIcon"
+        style={{ transform: !optionsToggled ? 'rotate(45deg)' : 'rotate(0deg)' }}
+        onClick={() => toggleOptions(!optionsToggled)}
+      >
+        <span>&times;</span>
+      </div>
+
+      {optionsToggled && (
+        <div className="ToolbarActions">
+          <span className="ToolbarAction">1</span>
+          <span className="ToolbarAction">2</span>
+          <span className="ToolbarAction">3</span>
+        </div>
+      )}
     </div>
   )
 }
