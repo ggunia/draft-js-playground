@@ -1,4 +1,5 @@
 import React from 'react'
+import { EditorState, AtomicBlockUtils } from 'draft-js'
 
 const initialOffsetTop = 5
 
@@ -26,13 +27,28 @@ const Toolbar = ({ store }) => {
     }, 0)
   }
 
+  const onActionClick = () => {
+    const editorState = store.getItem('editorState')
+    const updateEditorState = store.getItem('setEditorState')
+
+    const editor = EditorState.forceSelection(store.getItem('editorState'), editorState.getSelection())
+  
+    const contentState = editor.getCurrentContent()
+    const contentStateWithEntity = contentState.createEntity('embedded-document-plugin', 'IMMUTABLE', { embeddedUrl: '' })
+    const entityKey = contentStateWithEntity.getLastCreatedEntityKey()
+  
+    const newEditorState = AtomicBlockUtils.insertAtomicBlock(editor, entityKey, ' ')
+    toggleOptions(false)
+    updateEditorState(newEditorState)
+  }
+
   React.useEffect(() => {
     store.subscribeToItem('editorState', onEditorStateChange)
 
     return () => {
       store.unsubscribeFromItem('editorState', onEditorStateChange)
     }
-  }, [])
+  }, []) // eslint-disable-line
 
   return (
     <div className="ToolbarContainer" style={{ top: topOffset }}>
@@ -46,7 +62,7 @@ const Toolbar = ({ store }) => {
 
       {optionsToggled && (
         <div className="ToolbarActions">
-          <span className="ToolbarAction">1</span>
+          <span onClick={onActionClick} className="ToolbarAction">1</span>
           <span className="ToolbarAction">2</span>
           <span className="ToolbarAction">3</span>
         </div>

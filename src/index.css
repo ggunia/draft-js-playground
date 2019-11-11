@@ -26,6 +26,10 @@ code {
   position: relative;
 }
 
+.EditorContainer figure {
+  margin: 0px;
+}
+
 .public-DraftEditorPlaceholder-root {
   position: absolute;
   pointer-events: none;
