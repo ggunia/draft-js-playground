@@ -11,3 +11,35 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
+
+.App {
+  padding: 50px;
+}
+
+.EditorContainer {
+  border: 1px solid gray;
+  padding: 10px;
+  border-radius: 5px;
+  width: 70%;
+  margin: auto;
+  position: relative;
+}
+
+.public-DraftEditorPlaceholder-root {
+  position: absolute;
+  pointer-events: none;
+  color: gray;
+  opacity: 0.7;
+}
+
+.ToolbarIcon {
+  width: 30px;
+  height: 30px;
+  border: 1px solid gray;
+  border-radius: 15px;
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  left: -50px;
+  cursor: pointer;
+}
