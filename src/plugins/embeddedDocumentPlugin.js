@@ -2,7 +2,7 @@ import EmbeddedDocument from '../components/EmbeddedDocument'
 
 export default () => {
   return {
-    blockRendererFn: (block, { getEditorState, ...rest }) => {
+    blockRendererFn: (block, { getEditorState, setReadOnly, setEditorState }) => {
       if (block.getType() === 'atomic') {
         const contentState = getEditorState().getCurrentContent()
 
@@ -15,12 +15,13 @@ export default () => {
               component: EmbeddedDocument,
               editable: false,
               props: {
-                setReadOnly: rest.setReadOnly,
-                setEditorState: rest.setEditorState,
+                setReadOnly,
+                setEditorState,
               }
             }
           }
         } catch (error) {
+          console.log('handle cases when somehow atomic block has not matching EntityMap')
           console.log(error)
         }
       }
