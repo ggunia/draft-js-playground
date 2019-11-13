@@ -1,15 +1,12 @@
 import React from 'react'
 
-import { EditorContext } from '../contextes'
-
-const EmbeddedDocument = () => {
+const EmbeddedDocument = ({ blockProps: { setReadOnly } }) => {
   const inputRef = React.useRef(null)
-  const { toggleEditor } = React.useContext(EditorContext)
 
   React.useEffect(() => {
-    toggleEditor(false)
+    setReadOnly(true)
     inputRef.current.focus()
-  }, [])
+  }, [setReadOnly])
 
   return (
     <input
@@ -17,7 +14,7 @@ const EmbeddedDocument = () => {
       className="EmbedInput"
       autoFocus
       placeholder="Paste a link to embed content from another site and press enter"
-      onBlur={() => toggleEditor(true)}
+      onBlur={() => setReadOnly(false)}
     />
   )
 }

@@ -5,8 +5,6 @@ import { EditorState } from 'draft-js'
 import createSidebarToolbarPlugin from './plugins/sidebarToolbarPlugin'
 import createEmbeddedDocumentPlugin from './plugins/embeddedDocumentPlugin'
 
-import { EditorContext } from './contextes'
-
 // initialize custom plugins
 const sidebarToolbarPlugin = createSidebarToolbarPlugin()
 const embeddedDocumentPlugin = createEmbeddedDocumentPlugin()
@@ -21,25 +19,21 @@ const plugins = [
 ]
 
 const App = () => {
-  const [editorToggled, toggleEditor] = React.useState(true)
   const [editorState, updateEditorState] = React.useState(EditorState.createEmpty())
 
   return (
-    <EditorContext.Provider value={{ editorToggled, toggleEditor }}>
-      <div className="App">
-        <div className="EditorContainer">
-          <Editor
-            editorState={editorState}
-            plugins={plugins}
-            onChange={updateEditorState}
-            placeholder="Tell your story..."
-            readOnly={!editorToggled}
-          />
+    <div className="App">
+      <div className="EditorContainer">
+        <Editor
+          editorState={editorState}
+          plugins={plugins}
+          onChange={updateEditorState}
+          placeholder="Tell your story..."
+        />
 
-          <SideToolbar />
-        </div>
+        <SideToolbar />
       </div>
-    </EditorContext.Provider>
+    </div>
   )
 }
 

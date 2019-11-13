@@ -2,7 +2,7 @@ import EmbeddedDocument from '../components/EmbeddedDocument'
 
 export default () => {
   return {
-    blockRendererFn: (block, { getEditorState }) => {
+    blockRendererFn: (block, { getEditorState, ...rest }) => {
       if (block.getType() === 'atomic') {
         const contentState = getEditorState().getCurrentContent()
 
@@ -14,6 +14,10 @@ export default () => {
             return {
               component: EmbeddedDocument,
               editable: false,
+              props: {
+                setReadOnly: rest.setReadOnly,
+                setEditorState: rest.setEditorState,
+              }
             }
           }
         } catch (error) {
